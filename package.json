@@ -1,0 +1,20 @@
+{
+  "name": "biblioteca-virtual-g03",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema de administración para la Biblioteca Virtual G03",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend",
+    "prisma:generate": "npm run prisma:generate --workspace backend",
+    "prisma:migrate": "npm run prisma:migrate --workspace backend",
+    "prisma:migrate:dev": "npm run prisma:migrate:dev --workspace backend",
+    "prisma:seed": "npm run prisma:seed --workspace backend",
+    "test": "npm test --workspace backend"
+  }
+}

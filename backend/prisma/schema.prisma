@@ -1,0 +1,277 @@
+// Esquema de datos del Sistema de Administración para la Biblioteca Virtual G03.
+// Fuente de verdad funcional: Documento_de_requerimientos_G03_Biblioteca_Virtual.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  ADMINISTRADOR
+  BIBLIOTECARIO
+  CLIENTE
+}
+
+enum TipoCliente {
+  LECTOR_GENERAL
+  ESTUDIANTE
+  BECARIO
+  INSTITUCION_EDUCATIVA
+}
+
+// Estados persistidos. "Por vencer" y "Vencido" se calculan al consultar
+// a partir de fechaLimite, para evitar tareas programadas y datos derivados
+// inconsistentes.
+enum EstadoPrestamo {
+  SOLICITADO
+  APROBADO
+  PRESTADO
+  RENOVADO
+  DEVUELTO
+  DEVUELTO_CON_RETRASO
+  CANCELADO
+  PERDIDO
+}
+
+enum CondicionEjemplar {
+  BUENO
+  DANADO
+  PERDIDO
+}
+
+// Ciclo de vida de una solicitud de cambio de tipo de cliente presentada por
+// el propio Cliente. El Bibliotecario la aprueba o rechaza.
+enum EstadoSolicitudTipoCliente {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+  CANCELADA
+}
+
+model Usuario {
+  id            Int          @id @default(autoincrement())
+  nombres       String       @db.VarChar(100)
+  apellidos     String       @db.VarChar(100)
+  email         String       @unique @db.VarChar(191)
+  identificacion String      @unique @db.VarChar(30)
+  passwordHash  String       @db.VarChar(255)
+  telefono      String?      @db.VarChar(30)
+  direccion     String?      @db.VarChar(255)
+  rol           Rol          @default(CLIENTE)
+  // Solo aplica cuando rol = CLIENTE.
+  tipoCliente   TipoCliente?
+  activo        Boolean      @default(true)
+  // Documento de validación registrado por el Bibliotecario.
+  documentoValidacion String? @db.VarChar(255)
+
+  // Datos del responsable cuando tipoCliente = INSTITUCION_EDUCATIVA.
+  institucionNombre    String? @db.VarChar(191)
+  institucionRuc       String? @db.VarChar(20)
+  responsableNombre    String? @db.VarChar(191)
+  responsableCargo     String? @db.VarChar(100)
+  responsableEmail     String? @db.VarChar(191)
+  responsableTelefono  String? @db.VarChar(30)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  solicitudes       SolicitudPrestamo[]    @relation("SolicitudCliente")
+  solicitudesCreadas SolicitudPrestamo[]   @relation("SolicitudCreador")
+  prestamos         Prestamo[]             @relation("PrestamoCliente")
+  aprobaciones      Prestamo[]             @relation("PrestamoAprobador")
+  entregas          Prestamo[]             @relation("PrestamoEntregador")
+  devoluciones      Prestamo[]             @relation("PrestamoDevolvedor")
+  cancelaciones     Prestamo[]             @relation("PrestamoCancelador")
+  historial         HistorialEstadoPrestamo[]
+  solicitudesTipoCliente         SolicitudTipoCliente[] @relation("SolicitudTipoClienteCliente")
+  solicitudesTipoClienteRevisadas SolicitudTipoCliente[] @relation("SolicitudTipoClienteRevisor")
+
+  @@index([rol, activo])
+  @@index([tipoCliente])
+}
+
+model PoliticaPrestamo {
+  id                    Int         @id @default(autoincrement())
+  tipoCliente           TipoCliente @unique
+  maxLibrosSimultaneos  Int
+  plazoDias             Int
+  renovacionesPermitidas Int
+  diasRenovacion        Int
+  requiereDocumento     Boolean     @default(true)
+  documentoDescripcion  String      @db.VarChar(255)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+}
+
+model Categoria {
+  id     Int     @id @default(autoincrement())
+  nombre String  @unique @db.VarChar(100)
+  libros Libro[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Libro {
+  id             Int      @id @default(autoincrement())
+  titulo         String   @db.VarChar(255)
+  autor          String   @db.VarChar(191)
+  editorial      String   @db.VarChar(191)
+  anioPublicacion Int
+  isbn           String   @unique @db.VarChar(20)
+  categoriaId    Int
+  activo         Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoria  Categoria  @relation(fields: [categoriaId], references: [id], onDelete: Restrict)
+  ejemplares Ejemplar[]
+  prestamos  Prestamo[]
+
+  @@index([titulo])
+  @@index([autor])
+  @@index([categoriaId, activo])
+}
+
+model Ejemplar {
+  id        Int               @id @default(autoincrement())
+  codigo    String            @unique @db.VarChar(50)
+  libroId   Int
+  condicion CondicionEjemplar @default(BUENO)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  libro     Libro      @relation(fields: [libroId], references: [id], onDelete: Restrict)
+  prestamos Prestamo[]
+
+  @@index([libroId, condicion])
+}
+
+// Agrupa los préstamos generados por una misma solicitud. Permite que una
+// Institución educativa solicite varios libros en un solo lote, manteniendo
+// el estado individual de cada préstamo.
+model SolicitudPrestamo {
+  id         Int      @id @default(autoincrement())
+  clienteId  Int
+  creadaPorId Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  cliente  Usuario   @relation("SolicitudCliente", fields: [clienteId], references: [id], onDelete: Restrict)
+  creadaPor Usuario? @relation("SolicitudCreador", fields: [creadaPorId], references: [id], onDelete: SetNull)
+  prestamos Prestamo[]
+
+  @@index([clienteId])
+}
+
+model Prestamo {
+  id          Int            @id @default(autoincrement())
+  solicitudId Int
+  clienteId   Int
+  libroId     Int
+  ejemplarId  Int?
+  estado      EstadoPrestamo @default(SOLICITADO)
+
+  fechaSolicitud DateTime  @default(now())
+  fechaAprobacion DateTime?
+  fechaEntrega   DateTime?
+  fechaLimite    DateTime?
+  fechaDevolucion DateTime?
+
+  renovacionesRealizadas Int                @default(0)
+  condicionDevolucion    CondicionEjemplar?
+  observaciones          String?            @db.Text
+
+  aprobadoPorId  Int?
+  entregadoPorId Int?
+  devueltoPorId  Int?
+  canceladoPorId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  solicitud  SolicitudPrestamo @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  cliente    Usuario          @relation("PrestamoCliente", fields: [clienteId], references: [id], onDelete: Restrict)
+  libro      Libro            @relation(fields: [libroId], references: [id], onDelete: Restrict)
+  ejemplar   Ejemplar?        @relation(fields: [ejemplarId], references: [id], onDelete: Restrict)
+  aprobadoPor Usuario?        @relation("PrestamoAprobador", fields: [aprobadoPorId], references: [id], onDelete: SetNull)
+  entregadoPor Usuario?       @relation("PrestamoEntregador", fields: [entregadoPorId], references: [id], onDelete: SetNull)
+  devueltoPor Usuario?        @relation("PrestamoDevolvedor", fields: [devueltoPorId], references: [id], onDelete: SetNull)
+  canceladoPor Usuario?       @relation("PrestamoCancelador", fields: [canceladoPorId], references: [id], onDelete: SetNull)
+  historial  HistorialEstadoPrestamo[]
+
+  @@index([clienteId, estado])
+  @@index([libroId, estado])
+  @@index([ejemplarId])
+  @@index([fechaLimite])
+  @@index([fechaSolicitud])
+}
+
+model HistorialEstadoPrestamo {
+  id            Int             @id @default(autoincrement())
+  prestamoId    Int
+  estadoAnterior EstadoPrestamo?
+  estadoNuevo   EstadoPrestamo
+  observacion   String?         @db.VarChar(255)
+  usuarioId     Int?
+  createdAt     DateTime        @default(now())
+
+  prestamo Prestamo @relation(fields: [prestamoId], references: [id], onDelete: Cascade)
+  usuario  Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+
+  @@index([prestamoId, createdAt])
+}
+
+// Solicitud presentada por un Cliente para cambiar su tipo (Becario o
+// Institución educativa). Incluye los datos de validación que revisa el
+// Bibliotecario antes de aprobarla. Se conserva el historial aunque la
+// solicitud sea rechazada o cancelada.
+model SolicitudTipoCliente {
+  id                 Int                        @id @default(autoincrement())
+  clienteId          Int
+  tipoSolicitado     TipoCliente
+  documentoValidacion String                      @db.VarChar(255)
+  institucionNombre  String?                    @db.VarChar(191)
+  institucionRuc     String?                    @db.VarChar(20)
+  responsableNombre  String?                    @db.VarChar(191)
+  responsableCargo   String?                    @db.VarChar(100)
+  responsableEmail   String?                    @db.VarChar(191)
+  responsableTelefono String?                   @db.VarChar(30)
+  motivo             String?                    @db.VarChar(255)
+  estado             EstadoSolicitudTipoCliente @default(PENDIENTE)
+  observacionRevision String?                   @db.VarChar(255)
+  revisadaPorId      Int?
+  revisadaEn         DateTime?
+  createdAt          DateTime                   @default(now())
+  updatedAt          DateTime                   @updatedAt
+
+  cliente     Usuario @relation("SolicitudTipoClienteCliente", fields: [clienteId], references: [id], onDelete: Cascade)
+  revisadaPor Usuario? @relation("SolicitudTipoClienteRevisor", fields: [revisadaPorId], references: [id], onDelete: SetNull)
+  documentos  DocumentoSolicitudTipo[]
+
+  @@index([clienteId, estado])
+  @@index([estado, createdAt])
+}
+
+// Archivos adjuntos (PDF o imágenes) que respaldan una solicitud de cambio
+// de tipo de cliente. El archivo se guarda en backend/uploads/solicitudes y
+// aquí solo se conserva su metadata.
+model DocumentoSolicitudTipo {
+  id             Int      @id @default(autoincrement())
+  solicitudId    Int
+  nombreOriginal String   @db.VarChar(255)
+  nombreArchivo  String   @db.VarChar(255)
+  mimeType       String   @db.VarChar(100)
+  tamano         Int
+  createdAt      DateTime @default(now())
+
+  solicitud SolicitudTipoCliente @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+
+  @@index([solicitudId])
+}

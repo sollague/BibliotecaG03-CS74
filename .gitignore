@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+.tmp/
+
+# Documentos cargados por los usuarios (se conserva la carpeta)
+backend/uploads/solicitudes/*
+!backend/uploads/solicitudes/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+!backend/uploads/solicitudes/
