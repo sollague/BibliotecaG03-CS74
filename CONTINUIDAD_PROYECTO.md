@@ -173,7 +173,7 @@ npm run prisma:migrate
 
 | Verificación | Resultado |
 | --- | --- |
-| `npm test` (backend) | 19 pruebas aprobadas, 0 fallidas. Incluye 6 unitarias de estados derivados y 13 de integración. |
+| `npm test` (backend) | 20 pruebas aprobadas, 0 fallidas. Incluye 6 unitarias de estados derivados y 14 de integración. |
 | `npm run build` (frontend) | Compilación correcta. Solo advertencia de tamaño de chunk (>500 kB). |
 | Política de Estudiante | Migración `20261123120000_tipo_cliente_estudiante` aplicada; política creada con 4 préstamos, 20 días y 1 renovación de 20 días. |
 | Flujo API completo | Registro, edición de perfil, solicitud de cambio de tipo, aprobación/rechazo, asignación de tipo/documento, creación de libro y ejemplares, solicitud, bloqueo por rol, aprobación, entrega, renovación, rechazo de segunda renovación, devolución, disponibilidad restaurada y tres reportes. |

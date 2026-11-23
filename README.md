@@ -224,6 +224,7 @@ Cobertura actual:
 - Cálculo de estados derivados «Por vencer» y «Vencido».
 - Autoservicio del Cliente: edición de datos personales (incluido el correo) y protección de identificación, rol y tipo de cliente.
 - Solicitudes de cambio de tipo: creación, duplicados, datos de institución, aprobación, rechazo, cancelación y permisos por rol.
+- Cambio a Estudiante y aplicación de su política de préstamo (20 días) tras la aprobación.
 
 Verificación manual complementaria: la interfaz se recorrió con Playwright en escritorio y móvil (registro público en cuatro pasos con indicador de avance, login por rol, catálogo, solicitud, ciclo completo del préstamo, edición de políticas, cuentas, reportes y menú móvil). El detalle se registra en `CONTINUIDAD_PROYECTO.md`.
 

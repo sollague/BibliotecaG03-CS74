@@ -4,7 +4,7 @@
 **Fecha de revisión:** 23/11/2026  
 **Objetivo:** listar los cambios que deben aplicarse al documento de requerimientos antes de consolidarlo en el documento principal, y señalar las contradicciones detectadas.
 
-> **Estado:** las correcciones de este documento ya fueron aplicadas al documento de requerimientos el 23/11/2026 (versión 1.4). Se agregó la sección **2.4. Exclusión del componente económico** y la regla **RN-13** para destacar que el sistema es exclusivamente de solicitud y gestión de préstamos y no incluye ningún componente económico. Este archivo queda como registro de la revisión y de las decisiones tomadas.
+> **Estado:** las correcciones de este documento ya fueron aplicadas al documento de requerimientos el 23/11/2026 (versiones 1.4 y 1.5). Se agregó la sección **2.4. Exclusión del componente económico** y la regla **RN-13** para destacar que el sistema es exclusivamente de solicitud y gestión de préstamos y no incluye ningún componente económico. La versión 1.5 incorpora el tipo de cliente **Estudiante** y su política de préstamo. Este archivo queda como registro de la revisión y de las decisiones tomadas.
 
 ---
 

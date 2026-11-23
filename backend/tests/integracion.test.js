@@ -912,6 +912,66 @@ test('el cliente solicita cambio a becario y el bibliotecario lo aprueba', async
   assert.equal(revisarOtraVez.status, 409, JSON.stringify(revisarOtraVez.body));
 });
 
+test('el cliente solicita cambio a estudiante y recibe la política del nuevo tipo', async (t) => {
+  const politica = await usarPolitica(t, 'ESTUDIANTE', {
+    maxLibrosSimultaneos: 4,
+    plazoDias: 20,
+    renovacionesPermitidas: 1,
+    diasRenovacion: 20,
+  });
+
+  const apiBibliotecario = sesion(bibliotecario.cookie);
+  const cliente = await crearCliente('solicitud-estudiante');
+  const apiCliente = sesion(cliente.cookie);
+
+  const sinDocumento = await apiCliente('POST', '/solicitudes-tipo', {
+    tipoSolicitado: 'ESTUDIANTE',
+  });
+  assert.equal(sinDocumento.status, 400, JSON.stringify(sinDocumento.body));
+
+  const creada = await apiCliente('POST', '/solicitudes-tipo', {
+    tipoSolicitado: 'ESTUDIANTE',
+    documentoValidacion: 'Certificado de estudiante 2026-001',
+    motivo: 'Estudiante de la Facultad de Ingeniería',
+  });
+  assert.equal(creada.status, 201, JSON.stringify(creada.body));
+  assert.equal(creada.body.data.estado, 'PENDIENTE');
+  assert.equal(creada.body.data.tipoSolicitado, 'ESTUDIANTE');
+
+  const aprobada = await apiBibliotecario(
+    'PATCH',
+    `/solicitudes-tipo/${creada.body.data.id}/revisar`,
+    { estado: 'APROBADA' },
+  );
+  assert.equal(aprobada.status, 200, JSON.stringify(aprobada.body));
+
+  const perfil = await apiCliente('GET', '/perfil');
+  assert.equal(perfil.status, 200);
+  assert.equal(perfil.body.data.tipoCliente, 'ESTUDIANTE');
+  assert.equal(
+    perfil.body.data.documentoValidacion,
+    'Certificado de estudiante 2026-001',
+  );
+
+  const libro = await crearLibro(apiBibliotecario, `Estudiante ${STAMP}`);
+  const prestamo = await crearPrestamo(apiCliente, libro.id);
+  const aprobado = await apiBibliotecario(
+    'PATCH',
+    `/prestamos/${prestamo.id}/aprobar`,
+  );
+  assert.equal(aprobado.status, 200, JSON.stringify(aprobado.body));
+  const entregado = await apiBibliotecario(
+    'PATCH',
+    `/prestamos/${prestamo.id}/entregar`,
+  );
+  assert.equal(entregado.status, 200, JSON.stringify(entregado.body));
+  assert.equal(entregado.body.data.estado, 'PRESTADO');
+  assert.ok(
+    Math.abs(diasDesdeAhora(entregado.body.data.fechaLimite) - politica.plazoDias) < 0.01,
+    `La fecha límite debe ser de ${politica.plazoDias} días: ${entregado.body.data.fechaLimite}`,
+  );
+});
+
 test('la solicitud de institución exige datos, el rechazo conserva el tipo y se puede cancelar', async () => {
   const cliente = await crearCliente('solicitud-institucion');
   const apiCliente = sesion(cliente.cookie);
