@@ -30,7 +30,7 @@
 | 10/11/2026 | 1.1 | DREAM TEAM | DREAM TEAM | Borrador |
 | 16/11/2026 | 1.2 | ANDRES OLLAGUE | DREAM TEAM | Se aplicaron las correcciones dadas por la Ing. Tania Peralta |
 | 19/11/2026 | 1.3 | DREAM TEAM | DREAM TEAM | Autoservicio del cliente: edición de datos personales y solicitud de cambio de tipo de cliente. Corrección de RN-02 y RN-10. Mejoras de UX en registro, inicio y catálogo. |
-| 23/11/2026 | 1.4 | DREAM TEAM | DREAM TEAM | Registro guiado en 4 pasos, carga de documentos en solicitudes de cambio de tipo, catálogo inicial de ejemplo, corrección de roles y aclaración de estados derivados. Se refuerza que el sistema no incluye componente económico. |
+| 21/11/2026 | 1.4 | DREAM TEAM | DREAM TEAM | Registro guiado en 4 pasos, carga de documentos en solicitudes de cambio de tipo, catálogo inicial de ejemplo, corrección de roles y aclaración de estados derivados. Se refuerza que el sistema no incluye componente económico. |
 | 23/11/2026 | 1.5 | DREAM TEAM | DREAM TEAM | Se agrega el tipo de cliente Estudiante, su política de préstamo inicial y su flujo de solicitud de cambio. |
 
 ## Información del Proyecto
@@ -125,7 +125,7 @@ Documentos que complementan la especificación de requerimientos del sistema Bib
 
 - Procesos de préstamo y devolución de la Biblioteca Virtual UG, Universidad de Guayaquil. Referencia de los procesos que el sistema automatiza.
 - `README.md`: instalación, configuración, seed y solución de problemas.
-- `CONTINUIDAD_PROYECTO.md`: estado funcional, decisiones y continuidad del proyecto.
+- `docs/CONTINUIDAD_PROYECTO.md`: estado funcional, decisiones y continuidad del proyecto.
 - `database/biblioteca_g03.sql`: script de creación de la base de datos y control de migraciones.
 
 ---
@@ -139,14 +139,14 @@ Documentos que complementan la especificación de requerimientos del sistema Bib
 - 4.1.3. Cierre de sesión
 - 4.1.4. Gestión del perfil personal
 - 4.1.5. Administración de perfiles de acceso
-  - 4.1.5.1. Administrador
-  - 4.1.5.2. Bibliotecario
-  - 4.1.5.3. Cliente
+    - 4.1.5.1. Administrador
+    - 4.1.5.2. Bibliotecario
+    - 4.1.5.3. Cliente
 - 4.1.6. Administración de tipos de cliente
-  - 4.1.6.1. Lector general
-  - 4.1.6.2. Estudiante
-  - 4.1.6.3. Becario
-  - 4.1.6.4. Institución educativa
+    - 4.1.6.1. Lector general
+    - 4.1.6.2. Estudiante
+    - 4.1.6.3. Becario
+    - 4.1.6.4. Institución educativa
 - 4.1.7. Solicitudes de cambio de tipo de cliente
 
 ### 4.2. GESTIÓN DE LIBROS
@@ -165,16 +165,16 @@ Documentos que complementan la especificación de requerimientos del sistema Bib
 - 4.3.4. Renovación
 - 4.3.5. Cancelación
 - 4.3.6. Control del estado del préstamo
-  - 4.3.6.1. Solicitado
-  - 4.3.6.2. Aprobado
-  - 4.3.6.3. Prestado
-  - 4.3.6.4. Renovado
-  - 4.3.6.5. Devuelto
-  - 4.3.6.6. Devuelto con retraso
-  - 4.3.6.7. Cancelado
-  - 4.3.6.8. Perdido
-  - 4.3.6.9. Por vencer (derivado)
-  - 4.3.6.10. Vencido (derivado)
+    - 4.3.6.1. Solicitado
+    - 4.3.6.2. Aprobado
+    - 4.3.6.3. Prestado
+    - 4.3.6.4. Renovado
+    - 4.3.6.5. Devuelto
+    - 4.3.6.6. Devuelto con retraso
+    - 4.3.6.7. Cancelado
+    - 4.3.6.8. Perdido
+    - 4.3.6.9. Por vencer (derivado)
+    - 4.3.6.10. Vencido (derivado)
 
 ### 4.4. GESTIÓN DE REPORTES
 
@@ -422,18 +422,18 @@ Reglas y principios que aplican a todo el conjunto de requerimientos del sistema
 La interfaz de usuario será desarrollada utilizando React.js, con Material UI (MUI) como biblioteca de componentes visuales para mantener una presentación uniforme, adaptable y consistente en las diferentes pantallas del sistema. Se utilizarán componentes para formularios, tablas, botones, cuadros de diálogo, menús de navegación y elementos de retroalimentación al usuario.
 
 - **Pantallas principales:**
-  - página principal;
-  - inicio de sesión y registro;
-  - catálogo de libros y detalle de libro;
-  - préstamos;
-  - clientes;
-  - solicitudes de cambio de tipo;
-  - libros y ejemplares;
-  - usuarios;
-  - políticas de préstamo;
-  - reportes;
-  - mis préstamos;
-  - perfil.
+    - página principal;
+    - inicio de sesión y registro;
+    - catálogo de libros y detalle de libro;
+    - préstamos;
+    - clientes;
+    - solicitudes de cambio de tipo;
+    - libros y ejemplares;
+    - usuarios;
+    - políticas de préstamo;
+    - reportes;
+    - mis préstamos;
+    - perfil.
 - **Registro guiado:** formulario de cuatro pasos (cédula; nombres y apellidos; correo, dirección y teléfono; contraseña) con barra de progreso, indicador «Paso X de 4», validación por paso, botón Atrás y mensajes claros. No muestra un resumen intermedio de los datos ya ingresados.
 - **Navegación:** barra superior y menú lateral (sidebar) adaptable a dispositivos móviles, con opciones según el rol.
 - **Estándares de interfaz gráfica (GUI):** diseño visual uniforme en todas las interfaces, con estilos, colores y tamaños consistentes para los botones de acción. Mensajes en español, claros y directos, que informen cuando una operación se complete correctamente, ocurra un error o se requiera confirmar una acción importante antes de ejecutarla.
@@ -500,7 +500,7 @@ Requerimientos no cubiertos en otras secciones:
 - **Internacionalización:** el sistema estará en español (Ecuador), con fechas en formato dd/mm/aaaa; se diseñará para permitir otros idiomas a futuro.
 - **Legales:** cumplimiento de la Ley Orgánica de Protección de Datos Personales del Ecuador en el tratamiento de los datos de los usuarios, y respeto a los derechos de autor del material bibliográfico.
 - **Reúso de componentes:** los módulos de autenticación, roles y reportes se diseñarán como componentes reutilizables para otros sistemas de la institución.
-- **Documentación:** la documentación disponible en esta entrega es `README.md`, `CONTINUIDAD_PROYECTO.md`, el script `database/biblioteca_g03.sql` y este documento de requerimientos. Los manuales formales de usuario y técnico quedan pendientes.
+- **Documentación:** la documentación disponible en esta entrega es `README.md`, `docs/CONTINUIDAD_PROYECTO.md`, el script `database/biblioteca_g03.sql` y este documento de requerimientos. Los manuales formales de usuario y técnico quedan pendientes.
 - **Catálogo inicial:** el seed carga 15 libros con 31 ejemplares de ejemplo únicamente cuando la tabla `Libro` está vacía, para que el catálogo no aparezca vacío en una instalación nueva.
 
 ---

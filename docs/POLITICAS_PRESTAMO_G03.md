@@ -2,7 +2,7 @@
 
 **Última actualización:** 23/11/2026
 
-Este documento registra las políticas de préstamo aplicadas por el sistema, los valores iniciales aprobados para el proyecto y las reglas que el backend valida en cada operación. La fuente funcional es el `Documento_de_requerimientos_G03_Biblioteca_Virtual.md` (secciones 7.3.1, 7.3.2, 7.3.4 y reglas RN-03, RN-04, RN-05). Los valores numéricos iniciales no están fijados por el SRS: fueron aprobados para esta implementación y el Administrador puede modificarlos desde la pantalla **Políticas de préstamo**.
+Este documento registra las políticas de préstamo aplicadas por el sistema, los valores iniciales aprobados para el proyecto y las reglas que el backend valida en cada operación. La fuente funcional es el `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md` (secciones 7.3.1, 7.3.2, 7.3.4 y reglas RN-03, RN-04, RN-05). Los valores numéricos iniciales no están fijados por el SRS: fueron aprobados para esta implementación y el Administrador puede modificarlos desde la pantalla **Políticas de préstamo**.
 
 ## 1. Tipos de cliente y valores iniciales
 
@@ -122,7 +122,7 @@ Solicitado ──aprobar──> Aprobado ──entregar──> Prestado ──re
 - Para Estudiante, Becario e Institución educativa el documento es obligatorio. Para Lector general es opcional.
 - Para Institución educativa también se registran el nombre de la institución y los datos del responsable (nombre obligatorio; RUC, cargo, correo y teléfono opcionales).
 - Los documentos se cargan y almacenan en `backend/uploads/solicitudes/` y se registran en la tabla `DocumentoSolicitudTipo`. La descarga exige sesión y solo está disponible para el Cliente propietario o el personal de biblioteca.
-- La política incluye el campo `requiereDocumento` y su descripción, editables por el Administrador. En la versión actual la validación del backend mantiene la exigencia de documento para Estudiante, Becario e Institución educativa; alinear ese indicador con una validación opcional requiere una decisión posterior (ver `CONTINUIDAD_PROYECTO.md`).
+- La política incluye el campo `requiereDocumento` y su descripción, editables por el Administrador. En la versión actual la validación del backend mantiene la exigencia de documento para Estudiante, Becario e Institución educativa; alinear ese indicador con una validación opcional requiere una decisión posterior (ver `docs/CONTINUIDAD_PROYECTO.md`).
 
 ## 9. Eliminación de libros
 

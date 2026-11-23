@@ -1,6 +1,6 @@
 # Actualizaciones y contradicciones del documento de requerimientos G03
 
-**Documento revisado:** `Documento_de_requerimientos_G03_Biblioteca_Virtual.md`  
+**Documento revisado:** `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md`  
 **Fecha de revisión:** 23/11/2026  
 **Objetivo:** listar los cambios que deben aplicarse al documento de requerimientos antes de consolidarlo en el documento principal, y señalar las contradicciones detectadas.
 
@@ -238,7 +238,7 @@ Agregar:
 - [ ] Actualizar la lista de tablas: `Usuario`, `PoliticaPrestamo`, `Categoria`, `Libro`, `Ejemplar`, `SolicitudPrestamo`, `Prestamo`, `HistorialEstadoPrestamo`, `SolicitudTipoCliente` y `DocumentoSolicitudTipo`.
 - [ ] Aclarar que los perfiles y los tipos de cliente son enums/columnas, no tablas independientes.
 - [ ] Agregar que los documentos adjuntos se guardan en disco y su metadata en `DocumentoSolicitudTipo`.
-- [ ] Aclarar que la documentación disponible es `README.md`, `CONTINUIDAD_PROYECTO.md`, el script SQL y este documento; los manuales formales de usuario y técnico quedan pendientes.
+- [ ] Aclarar que la documentación disponible es `README.md`, `docs/CONTINUIDAD_PROYECTO.md`, el script SQL y este documento; los manuales formales de usuario y técnico quedan pendientes.
 - [ ] Mantener la referencia a la Ley Orgánica de Protección de Datos Personales del Ecuador.
 
 ### 2.16. Sección 12. Glosario
@@ -307,7 +307,7 @@ Agregar:
 4. **Documento obligatorio:** la interfaz exige al menos un archivo, pero la API acepta solo la descripción por compatibilidad. Definir si el archivo es obligatorio también en la API.
 5. **SMTP:** confirmar que el envío de correos queda fuera de esta entrega o implementarlo.
 6. **RNF medidos:** decidir si se agregan evidencias de rendimiento, disponibilidad, navegadores y respaldos, o si se declaran como pendientes.
-7. **Manuales:** confirmar si se entregarán manual de usuario y manual técnico formales o si `README.md` y `CONTINUIDAD_PROYECTO.md` son suficientes para esta entrega.
+7. **Manuales:** confirmar si se entregarán manual de usuario y manual técnico formales o si `README.md` y `docs/CONTINUIDAD_PROYECTO.md` son suficientes para esta entrega.
 8. **Catálogo de ejemplo:** confirmar si los 15 libros del seed deben mantenerse en la entrega o eliminarse antes de la demostración.
 
 ---
@@ -337,9 +337,9 @@ Agregar:
 
 ## 7. Evidencia usada para esta revisión
 
-- `Documento_de_requerimientos_G03_Biblioteca_Virtual.md`
+- `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md`
 - `README.md`
-- `CONTINUIDAD_PROYECTO.md`
+- `docs/CONTINUIDAD_PROYECTO.md`
 - `backend/prisma/schema.prisma`
 - `backend/prisma/seed.js`
 - `backend/src/modules/usuarios/usuarios.routes.js`
@@ -359,7 +359,7 @@ Agregar:
 
 ## 8. Observación importante sobre el archivo actual
 
-El archivo `Documento_de_requerimientos_G03_Biblioteca_Virtual.md` parece una exportación de Google Docs: casi todas las líneas comienzan con `# `. Si se sube así al documento principal, el formato se verá como una sucesión de encabezados y las tablas perderán estructura. Antes de consolidarlo conviene:
+El archivo `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md` parece una exportación de Google Docs: casi todas las líneas comienzan con `# `. Si se sube así al documento principal, el formato se verá como una sucesión de encabezados y las tablas perderán estructura. Antes de consolidarlo conviene:
 
 1. Eliminar los `# ` innecesarios.
 2. Dejar solo los encabezados reales (`#`, `##`, `###`).

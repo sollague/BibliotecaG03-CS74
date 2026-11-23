@@ -1,5 +1,5 @@
 // Esquema de datos del Sistema de Administración para la Biblioteca Virtual G03.
-// Fuente de verdad funcional: Documento_de_requerimientos_G03_Biblioteca_Virtual.md
+// Fuente de verdad funcional: docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md
 
 generator client {
   provider = "prisma-client-js"

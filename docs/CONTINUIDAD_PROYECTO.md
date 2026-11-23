@@ -121,7 +121,7 @@ Modelos principales:
 2. **RN-08:** el SRS indica «toda eliminación de registros requiere confirmación previa del Administrador». Se interpretó como confirmación en la interfaz, ya que RN-02 asigna la eliminación de libros al Bibliotecario. Si se requiere una aprobación explícita del Administrador, es un flujo nuevo que debe aprobarse y diseñarse.
 3. **AWS:** fuera de alcance para esta entrega por decisión del proyecto. El SRS menciona AWS, pero no se definió arquitectura ni se desplegó. La ejecución local es el objetivo de entrega.
 4. **Datos de demostración:** la base local acumuló usuarios, libros y préstamos de las pruebas manuales de interfaz. Antes de una entrega o demostración conviene reiniciar la base y volver a ejecutar el seed.
-5. **Manuales formales:** el SRS pide un manual de usuario y un manual técnico de instalación. `README.md` y `POLITICAS_PRESTAMO_G03.md` cubren gran parte del contenido técnico, pero falta la entrega formal de ambos manuales.
+5. **Manuales formales:** el SRS pide un manual de usuario y un manual técnico de instalación. `README.md` y `docs/POLITICAS_PRESTAMO_G03.md` cubren gran parte del contenido técnico, pero falta la entrega formal de ambos manuales.
 6. **Repositorio Git:** el proyecto se versionó en un repositorio Git local en la rama `main`. Falta definir el remoto (por ejemplo, GitHub) y la estrategia de ramas para el trabajo colaborativo.
 7. **Pruebas de interfaz automatizadas:** la prueba Playwright se ejecutó fuera del repositorio y no quedó versionada. Las pruebas del backend sí están en `backend/tests`.
 8. **Tamaño del bundle:** el build del frontend emite una advertencia de chunk mayor a 500 kB. No impide la compilación; una mejora opcional es dividir rutas con importaciones dinámicas.
@@ -199,10 +199,10 @@ El despliegue en AWS no está en la lista de pendientes de esta entrega.
 
 | Archivo | Propósito |
 | --- | --- |
-| `Documento_de_requerimientos_G03_Biblioteca_Virtual.md` | Fuente funcional y reglas de negocio. |
+| `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md` | Fuente funcional y reglas de negocio. |
 | `diseno_visual_biblioteca_G03.mk` | Identidad visual y reglas responsive. |
 | `README.md` | Instalación, configuración, ejecución, pruebas y notas de despliegue. |
-| `POLITICAS_PRESTAMO_G03.md` | Políticas aplicadas y comportamiento del ciclo de préstamos. |
+| `docs/POLITICAS_PRESTAMO_G03.md` | Políticas aplicadas y comportamiento del ciclo de préstamos. |
 | `database/biblioteca_g03.sql` | Crea la base, el usuario, el esquema, las migraciones registradas y los datos iniciales. |
 | `backend/prisma/schema.prisma` | Modelo de datos. |
 | `backend/prisma/seed.js` | Administrador, políticas, categorías y catálogo inicial de ejemplo. |
@@ -236,9 +236,9 @@ Estas notas son operativas y pueden cambiar; no forman parte de la configuració
 
 Al retomar el proyecto:
 
-1. Leer este documento y `POLITICAS_PRESTAMO_G03.md`.
+1. Leer este documento y `docs/POLITICAS_PRESTAMO_G03.md`.
 2. Revisar el estado de los servicios y ejecutar `npm test` para confirmar la línea base.
 3. No modificar los documentos de requerimientos ni de diseño visual.
-4. Registrar toda decisión nueva en la sección 3 o 4 y actualizar `POLITICAS_PRESTAMO_G03.md` si afecta reglas de préstamo.
+4. Registrar toda decisión nueva en la sección 3 o 4 y actualizar `docs/POLITICAS_PRESTAMO_G03.md` si afecta reglas de préstamo.
 5. No incluir secretos, contraseñas ni cadenas de conexión reales en este archivo.
 6. Antes de cerrar una sesión con avance significativo, actualizar estado, verificaciones y pendientes.

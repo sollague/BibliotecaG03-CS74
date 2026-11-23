@@ -2,7 +2,7 @@
 
 Sistema de administración para la Biblioteca Virtual G03. Permite gestionar el catálogo bibliográfico y sus ejemplares, las cuentas y perfiles, los tipos de cliente, las políticas de préstamo, el ciclo completo de préstamos y los reportes operativos.
 
-La aplicación implementa los requerimientos del `Documento_de_requerimientos_G03_Biblioteca_Virtual.md` y la identidad visual de `diseno_visual_biblioteca_G03.mk`.
+La aplicación implementa los requerimientos del `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md` y la identidad visual de `diseno_visual_biblioteca_G03.mk`.
 
 ## Tecnologías
 
@@ -33,6 +33,11 @@ BiblioteaG03/
 │   └── tests/                   Pruebas unitarias y de integración
 ├── database/
 │   └── biblioteca_g03.sql       Script de creación de la base de datos
+├── docs/
+│   ├── Documento_de_requerimientos_G03_Biblioteca_Virtual.md
+│   ├── POLITICAS_PRESTAMO_G03.md
+│   ├── CONTINUIDAD_PROYECTO.md
+│   └── ACTUALIZACIONES_REQUERIMIENTOS_G03.md
 ├── frontend/
 │   └── src/
 │       ├── components/          Componentes comunes, layout, diálogos y tablas
@@ -42,10 +47,7 @@ BiblioteaG03/
 │       ├── services/            Cliente HTTP y servicios de la API
 │       ├── theme/               Tema centralizado de Material UI
 │       └── utils/               Etiquetas y utilidades de formularios
-├── Documento_de_requerimientos_G03_Biblioteca_Virtual.md
 ├── diseno_visual_biblioteca_G03.mk
-├── POLITICAS_PRESTAMO_G03.md
-├── CONTINUIDAD_PROYECTO.md
 └── package.json                 Workspaces de backend y frontend
 ```
 
@@ -226,7 +228,7 @@ Cobertura actual:
 - Solicitudes de cambio de tipo: creación, duplicados, datos de institución, aprobación, rechazo, cancelación y permisos por rol.
 - Cambio a Estudiante y aplicación de su política de préstamo (20 días) tras la aprobación.
 
-Verificación manual complementaria: la interfaz se recorrió con Playwright en escritorio y móvil (registro público en cuatro pasos con indicador de avance, login por rol, catálogo, solicitud, ciclo completo del préstamo, edición de políticas, cuentas, reportes y menú móvil). El detalle se registra en `CONTINUIDAD_PROYECTO.md`.
+Verificación manual complementaria: la interfaz se recorrió con Playwright en escritorio y móvil (registro público en cuatro pasos con indicador de avance, login por rol, catálogo, solicitud, ciclo completo del préstamo, edición de políticas, cuentas, reportes y menú móvil). El detalle se registra en `docs/CONTINUIDAD_PROYECTO.md`.
 
 ## Compilar el frontend
 
@@ -305,7 +307,9 @@ No se debe afirmar que el sistema está desplegado en AWS hasta completar y veri
 
 ## Documentación relacionada
 
-- `Documento_de_requerimientos_G03_Biblioteca_Virtual.md`: requerimientos funcionales y reglas de negocio.
+- `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md`: requerimientos funcionales y reglas de negocio.
 - `diseno_visual_biblioteca_G03.mk`: identidad visual, componentes y reglas responsive.
-- `POLITICAS_PRESTAMO_G03.md`: valores de política, documentos, renovaciones, devoluciones y estados.
-- `CONTINUIDAD_PROYECTO.md`: estado actual, decisiones, verificación y trabajo pendiente.
+- `docs/POLITICAS_PRESTAMO_G03.md`: valores de política, documentos, renovaciones, devoluciones y estados.
+- `docs/CONTINUIDAD_PROYECTO.md`: estado actual, decisiones, verificación y trabajo pendiente.
+- `docs/ACTUALIZACIONES_REQUERIMIENTOS_G03.md`: registro de la revisión y correcciones aplicadas al documento de requerimientos.
+- `database/biblioteca_g03.sql`: script completo para crear la base de datos, el usuario de aplicación, el esquema, las migraciones registradas y los datos iniciales.
