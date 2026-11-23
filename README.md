@@ -140,6 +140,19 @@ Abre `http://localhost:5173` e inicia sesión con el correo y la contraseña def
 
 La interfaz llama a `/api` y Vite redirige al backend en el puerto 4000. Si el frontend se sirve desde otro origen, define `VITE_API_URL` en el entorno de compilación con la URL pública de la API (por ejemplo, `https://api.example.com/api`).
 
+## Credenciales de demostración
+
+Cuentas disponibles en el entorno de entrega:
+
+| Rol | Correo | Contraseña |
+| --- | --- | --- |
+| Administrador | `admin@biblioteca.ug.edu.ec` | `Admin12345*` |
+| Bibliotecario | `bib.e2e@example.com` | `Bib12345*` |
+
+- La contraseña del Administrador se define en `backend/.env` mediante `ADMIN_PASSWORD`; el valor mostrado corresponde a este entorno de desarrollo.
+- La cuenta de Bibliotecario se creó manualmente para las pruebas de la entrega y **no** la genera el seed. Si reinstalas la base, créala desde **Usuarios → Crear cuenta** (cuenta de personal) con el rol Bibliotecario.
+- Estas credenciales son solo para la demostración académica. Cámbialas antes de usar el sistema en un entorno real o público.
+
 ## Variables de entorno
 
 El backend lee `backend/.env`, que está ignorado por Git. La plantilla es `backend/.env.example`.
