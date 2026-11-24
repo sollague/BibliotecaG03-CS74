@@ -11,7 +11,7 @@ El sistema está implementado de extremo a extremo para el alcance funcional del
 - Backend Node.js/Express con API REST, autenticación, autorización por roles, validación con Zod y Prisma sobre MySQL 8.
 - Base de datos con migraciones y seed (Administrador, políticas iniciales, categorías y catálogo de ejemplo).
 - Frontend React con Material UI, rutas protegidas por rol, formularios validados, tablas paginadas, diálogos, panel de detalle de préstamo y reportes imprimibles.
-- Diseño visual alineado con `diseno_visual_biblioteca_G03.mk`: naranja `#E87524`, tipografía Roboto, layout con barra lateral y barra superior, chips con texto, tablas con desplazamiento horizontal y navegación móvil.
+- Diseño visual alineado con `diseno_visual_biblioteca_G03.md`: naranja `#E87524`, tipografía Roboto, layout con barra lateral y barra superior, chips con texto, tablas con desplazamiento horizontal y navegación móvil.
 - Pruebas automatizadas del backend (unitarias y de integración) y verificación de la interfaz con Playwright.
 
 Por decisión del proyecto, la entrega se valida en ejecución local. El despliegue en AWS mencionado en el SRS no es un requisito para esta entrega y no se ejecutará en esta etapa. El sistema se desarrolló y verificó localmente.
@@ -200,7 +200,7 @@ El despliegue en AWS no está en la lista de pendientes de esta entrega.
 | Archivo | Propósito |
 | --- | --- |
 | `docs/Documento_de_requerimientos_G03_Biblioteca_Virtual.md` | Fuente funcional y reglas de negocio. |
-| `diseno_visual_biblioteca_G03.mk` | Identidad visual y reglas responsive. |
+| `diseno_visual_biblioteca_G03.md` | Identidad visual y reglas responsive. |
 | `README.md` | Instalación, configuración, ejecución, pruebas y notas de despliegue. |
 | `docs/POLITICAS_PRESTAMO_G03.md` | Políticas aplicadas y comportamiento del ciclo de préstamos. |
 | `database/biblioteca_g03.sql` | Crea la base, el usuario, el esquema, las migraciones registradas y los datos iniciales. |
